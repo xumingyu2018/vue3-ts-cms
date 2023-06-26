@@ -3,7 +3,21 @@
     <!-- 顶部标题 -->
     <h1 class="title">后台管理系统</h1>
     <!-- tabs标签页 -->
-    <div class="tabs">标签页</div>
+    <div class="tabs">
+      <el-tabs type="border-card" stretch="true">
+        <el-tab-pane label="账号登录">
+          <el-form>
+            <el-form-item label="账号">
+              <el-input placeholder="请输入账号"></el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+              <el-input placeholder="请输入密码"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="手机登录">Config</el-tab-pane>
+      </el-tabs>
+    </div>
     <!-- 底部区域 -->
     <div class="controls">
       <el-checkbox v-model="isRemPwd" label="记住密码" size="large "></el-checkbox>
