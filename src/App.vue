@@ -1,13 +1,10 @@
 <template>
   <div class="app">
-    <h2>App</h2>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
-
+<script setup lang="ts"></script>
 
 <style scoped>
 .app {

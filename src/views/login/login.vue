@@ -1,12 +1,11 @@
 <template>
   <div class="login">
-    <login-panel/>
+    <login-panel />
   </div>
 </template>
 
 <script setup lang="ts">
-import loginPanel from "./cpns/login-panel.vue";
-
+import loginPanel from './cpns/login-panel.vue'
 </script>
 
 <style lang="less" scoped>
@@ -16,7 +15,7 @@ import loginPanel from "./cpns/login-panel.vue";
   align-items: center;
 
   width: 100%;
-  height: 100%; 
+  height: 100%;
 
   background: url(../../assets/img/login-bg.svg);
 }

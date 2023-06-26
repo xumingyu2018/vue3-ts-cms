@@ -4,8 +4,8 @@
     <h1 class="title">后台管理系统</h1>
     <!-- tabs标签页 -->
     <div class="tabs">
-      <el-tabs type="border-card" stretch="true">
-        <el-tab-pane label="账号登录">
+      <el-tabs v-model="activeName" type="border-card" stretch="true">
+        <el-tab-pane label="账号登录" name="account">
           <template #label>
             <div class="label">
               <el-icon><UserFilled /></el-icon>
@@ -21,7 +21,7 @@
             </el-form-item>
           </el-form>
         </el-tab-pane>
-        <el-tab-pane label="手机登录">
+        <el-tab-pane label="手机登录" name="phone">
           <template #label>
             <div class="label">
               <el-icon><Cellphone /></el-icon>
@@ -38,14 +38,25 @@
       <el-checkbox v-model="isRemPwd" label="记住密码" size="large"></el-checkbox>
       <el-link type="primary" href="">忘记密码</el-link>
     </div>
-    <el-button class="login-btn" type="primary" size="large">立即登录</el-button>
+    <el-button class="login-btn" type="primary" size="large" @click="handleLoginBtnClick">
+      立即登录
+    </el-button>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const activeName = ref('account')
 const isRemPwd = ref(false)
+
+const handleLoginBtnClick = () => {
+  if (activeName.value === 'account') {
+    console.log('账号登录')
+  } else {
+    console.log('手机登录')
+  }
+}
 </script>
 
 <style lang="less" scoped>
