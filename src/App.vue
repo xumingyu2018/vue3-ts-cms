@@ -12,4 +12,10 @@
 
 
 <style scoped>
+.app {
+  /* 不能使用%，因为相对于父元素；vh相对于视口 */
+  width: 100vw;
+  height: 100vh;
+  background-color: skyblue;
+}
 </style>
