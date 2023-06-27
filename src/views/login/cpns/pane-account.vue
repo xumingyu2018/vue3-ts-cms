@@ -33,6 +33,15 @@ const accountRules: FormRules = {
   ]
 }
 
+// 执行帐号登录逻辑
+function loginAction() {
+  console.log('子组件帐号登录', account.username, account.password)
+}
+// 暴露给父组件
+defineExpose({
+    loginAction
+})
+
 
 </script>
 
