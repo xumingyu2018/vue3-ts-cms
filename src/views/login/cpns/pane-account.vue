@@ -16,10 +16,10 @@ import { reactive, ref } from "vue"
 import type { ElForm, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import useLoginStore from '@/store/login/login'
-
+import type { IAccount } from '@/types'
 
 // 定义account数据
-const account = reactive({
+const account = reactive<IAccount>({
   username: '',
   password: ''
 })

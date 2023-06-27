@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { accountLoginRequest } from '@/service/login/login'
+import type { IAccount } from "@/types";
 
 const useLoginStore = defineStore('login', {
     state: () => ({
@@ -9,12 +10,12 @@ const useLoginStore = defineStore('login', {
     }),
 
     actions: {
-        async loginAccountAction(account: any) {
+        async loginAccountAction(account: IAccount) {
             const loginResult = await accountLoginRequest(account)
             console.log("登录成功");
-            this.id = loginResult.id
-            this.token = loginResult.token
-            this.username = loginResult.username
+            this.id = loginResult.data.id
+            this.token = loginResult.data.token
+            this.username = loginResult.data.username
         }
     }
 })
