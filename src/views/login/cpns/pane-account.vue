@@ -45,9 +45,10 @@ function loginAction() {
         const username = account.username
         const password = account.password
 
+        // 调用store中的loginAccountAction(pinia)
         loginStore.loginAccountAction({ username, password })
     } else {
-        ElMessage.error('Oops, 请输入正确的格式.')
+        ElMessage.error('错误, 请输入正确的格式！')
     }
   })
 }
