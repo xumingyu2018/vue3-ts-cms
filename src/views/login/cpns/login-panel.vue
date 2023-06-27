@@ -44,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import paneAccount from './pane-account.vue'
 
 const activeName = ref('account')
