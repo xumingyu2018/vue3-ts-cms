@@ -3,9 +3,10 @@ enum CacheType {
   session = 'session'
 }
 
-class HYCache {
+class MyCache {
   storage: Storage
 
+  // 判断是localStorage还是sessionStorage
   constructor(type: CacheType) {
     this.storage = type === CacheType.local ? localStorage : sessionStorage
   }
@@ -30,7 +31,7 @@ class HYCache {
   }
 }
 
-const localCache = new HYCache(CacheType.local)
-const sessionCache = new HYCache(CacheType.session)
+const localCache = new MyCache(CacheType.local)
+const sessionCache = new MyCache(CacheType.session)
 
 export { localCache, sessionCache }
