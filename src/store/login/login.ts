@@ -5,7 +5,7 @@ import type { IAccount } from "@/types";
 const useLoginStore = defineStore('login', {
     state: () => ({
         id: '',
-        token: '',
+        token: localStorage.getItem('token') ?? '',
         username: ''
     }),
 
@@ -16,6 +16,9 @@ const useLoginStore = defineStore('login', {
             this.id = loginResult.data.id
             this.token = loginResult.data.token
             this.username = loginResult.data.username
+
+            // 进行本地缓存
+            localStorage.setItem('token', this.token)
         }
     }
 })
