@@ -1,6 +1,6 @@
 <template>
   <div class="account">
-    <el-form :model="account" label-width="60px" size="large" :rules="accountRules" status-icon>
+    <el-form :model="account" label-width="60px" size="large" :rules="accountRules" status-icon ref="formRef">
         <el-form-item label="帐号" prop="username">
             <el-input v-model="account.username" placeholder="请输入帐号"></el-input>
         </el-form-item>
@@ -12,8 +12,11 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue"
-import type { FormRules } from 'element-plus'
+import { reactive, ref } from "vue"
+import type { ElForm, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import useLoginStore from '@/store/login/login'
+
 
 // 定义account数据
 const account = reactive({
@@ -34,8 +37,19 @@ const accountRules: FormRules = {
 }
 
 // 执行帐号登录逻辑
+const formRef = ref<InstanceType<typeof ElForm>>()
+const loginStore = useLoginStore()
 function loginAction() {
-  console.log('子组件帐号登录', account.username, account.password)
+  formRef.value?.validate((valid: any) => {
+    if(valid) {
+        const username = account.username
+        const password = account.password
+
+        loginStore.loginAccountAction({ username, password })
+    } else {
+        ElMessage.error('Oops, 请输入正确的格式.')
+    }
+  })
 }
 // 暴露给父组件
 defineExpose({
