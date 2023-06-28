@@ -47,7 +47,7 @@ function loginAction(isRemPwd: boolean) {
         const password = account.password
 
         // 调用store中的loginAccountAction(pinia)
-        loginStore.loginAccountAction({ username, password }).then((res) => {
+        loginStore.loginAccountAction({ username, password }).then(() => {
           // 登录成功后记住密码
           if(isRemPwd) {
             localCache.setCache('username', username)
