@@ -26,8 +26,9 @@
               <div class="text">手机登录</div>
             </div>
           </template>
-          <div>手机登录</div>
-          <div>验证码</div>
+          
+          <!-- pane-phone -->
+          <pane-phone />
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -46,6 +47,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import paneAccount from './pane-account.vue'
+import panePhone from './pane-phone.vue';
 import { localCache } from '@/utils/cache';
 
 const activeName = ref('account')
