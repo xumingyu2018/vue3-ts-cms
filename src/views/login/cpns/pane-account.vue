@@ -17,11 +17,12 @@ import type { ElForm, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import useLoginStore from '@/store/login/login'
 import type { IAccount } from '@/types'
+import { localCache } from "@/utils/cache"
 
 // 定义account数据
 const account = reactive<IAccount>({
-  username: '',
-  password: ''
+  username: localCache.getCache('username') ?? '',
+  password: localCache.getCache('password') ?? ''
 })
 
 // 定义校验规则
@@ -39,14 +40,23 @@ const accountRules: FormRules = {
 // 执行帐号登录逻辑
 const formRef = ref<InstanceType<typeof ElForm>>()
 const loginStore = useLoginStore()
-function loginAction() {
+function loginAction(isRemPwd: boolean) {
   formRef.value?.validate((valid: any) => {
     if(valid) {
         const username = account.username
         const password = account.password
 
         // 调用store中的loginAccountAction(pinia)
-        loginStore.loginAccountAction({ username, password })
+        loginStore.loginAccountAction({ username, password }).then((res) => {
+          // 登录成功后记住密码
+          if(isRemPwd) {
+            localCache.setCache('username', username)
+            localCache.setCache('password', password)
+          } else {
+            localCache.deleteCache('username')
+            localCache.deleteCache('password')
+          }
+        })
     } else {
         ElMessage.error('错误, 请输入正确的格式！')
     }

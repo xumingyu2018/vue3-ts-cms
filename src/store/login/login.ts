@@ -16,9 +16,13 @@ const useLoginStore = defineStore('login', {
         async loginAccountAction(account: IAccount) {
             // 1. 帐号登录，axios获取token等信息
             // const loginResult = await accountLoginRequest(account)
-            // this.id = loginResult.data.id
-            // this.token = loginResult.data.token
-            // this.username = loginResult.data.username
+            if(account.username === 'admin123' && account.password === '123456') {
+                // this.id = loginResult.data.id
+                // this.token = loginResult.data.token
+                // this.username = loginResult.data.username
+                this.id = '1'
+                this.token = '260602448'
+            }
 
             // 2. 进行本地缓存（使用封装的cache工具）
             // localStorage.setItem('token', this.token)

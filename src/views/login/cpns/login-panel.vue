@@ -44,18 +44,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import paneAccount from './pane-account.vue'
+import { localCache } from '@/utils/cache';
 
 const activeName = ref('account')
-const isRemPwd = ref(false)
 const accountRef = ref<InstanceType<typeof paneAccount>>()
+
+const isRemPwd = ref<boolean>(localCache.getCache('isRemPwd') ?? false)
+watch(isRemPwd, (newValue) => {
+  localCache.setCache('isRemPwd', newValue)
+})
 
 // 按钮监听
 const handleLoginBtnClick = () => {
   if (activeName.value === 'account') {
     // 父组件调用子组件方法
-    accountRef.value?.loginAction()
+    accountRef.value?.loginAction(isRemPwd.value)
   } else {
     console.log('手机登录')
   }
