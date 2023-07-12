@@ -1,17 +1,8 @@
-// export const BASE_URL1 = 'http://152.136.185.210:5000'
-// export const TIME_OUT1 = 10000
-
-// console.log(import.meta.env.DEV);
-// console.log(import.meta.env.PROD);
-// console.log(import.meta.env.SSR);
-// console.log(import.meta.env.VITE_BASE_URL);
-
-
 let BASE_URL1 = ''
 if(import.meta.env.PROD) {
-    BASE_URL1 = 'http://152.136.185.210:4000'
+    BASE_URL1 = 'http://121.37.196.89:8880'
 } else {
-    BASE_URL1 = 'http://152.136.185.210:5000'
+    BASE_URL1 = 'http://121.37.196.89:8880'
 }
 
 export const TIME_OUT1 = 10000
