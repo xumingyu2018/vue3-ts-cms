@@ -1,6 +1,7 @@
+import { localCache } from "@/utils/cache"
 import hyRequest from ".."
 import type { IAccount } from "@/types"
-
+ 
 export function accountLogin(account: IAccount) {
     return hyRequest.post({
         url: '/login',
@@ -8,4 +9,11 @@ export function accountLogin(account: IAccount) {
     })
 }
 
- 
+ export function getUserInfoById(id: number) {
+    return hyRequest.get({
+        url: `/users/${id}`,
+        // headers: {
+        //     Authorization: 'Bearer ' + localCache.getCache('token')
+        // }
+    })
+ }

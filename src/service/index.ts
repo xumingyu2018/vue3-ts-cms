@@ -5,6 +5,7 @@ import { localCache } from '@/utils/cache'
 const hyRequest = new HYRequest({
   baseURL: BASE_URL1,
   timeout: TIME_OUT1,
+  // 请求成功拦截器，将每一个请求附带token
   interceptors: {
     requestInterceptor: (config) => {
       const token = localCache.getCache('token')
