@@ -17,3 +17,9 @@ export function accountLogin(account: IAccount) {
         // }
     })
  }
+
+ export function getUserMenusByRoleId(id: number) {
+    return hyRequest.get({
+        url: `/role/${id}/menu`,
+    })
+ }
