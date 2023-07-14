@@ -1,7 +1,9 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="200px">Aside</el-aside>
+      <el-aside width="210px">
+        <main-menu/>
+      </el-aside>
       <el-container>
         <el-header height="50px">Header</el-header>
         <el-main>Main</el-main>
@@ -13,6 +15,7 @@
 <script setup lang="ts">
 import { localCache } from '@/utils/cache';
 import { useRouter } from 'vue-router';
+import MainMenu from '@/components/main-menu/main-menu.vue'
 
 const router = useRouter()
 const handleExitClick = () => {
@@ -28,18 +31,26 @@ const handleExitClick = () => {
 
   .main-content {
     height: 100%;
-    .el-aside {
-      background: yellowgreen;
-    }
 
-    .el-header {
-      background: skyblue;
+    .el-aside {
+      overflow-x: hidden;
+      overflow-y: auto;
+      line-height: 200px;
+      text-align: left;
+      cursor: pointer;
+      background-color: #001529;
+      transition: width 0.3s linear;
+      scrollbar-width: none; /* firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     .el-main {
-      background: pink;
+      background-color: #f0f2f5;
     }
-
   }
 }
 </style>
