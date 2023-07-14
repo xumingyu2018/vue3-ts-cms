@@ -16,6 +16,9 @@
           <!-- 子菜单 -->
           <el-sub-menu :index="item.id + ''">
             <template #title>
+              <el-icon>
+                <component :is="item.icon.split('-icon-')[1]"/>
+              </el-icon>
               <span>{{ item.name }}</span>
             </template>
 
@@ -35,7 +38,6 @@ import useLoginStore from '@/store/login/login';
 
 const loginStore = useLoginStore();
 const userMenus = loginStore.userMenus
-console.log(userMenus);
 
 </script>
 
