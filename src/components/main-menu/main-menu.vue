@@ -12,32 +12,32 @@
         active-text-color="#fff"
         background-color="#001529"        
       >
-        <el-sub-menu index="1">
-          <!-- 插槽 -->
-          <template #title>
-            <el-icon><Monitor /></el-icon>
-            <span>系统总览</span>
-          </template>
-          <el-menu-item>核心技术</el-menu-item>
-          <el-menu-item>商品统计</el-menu-item>
-        </el-sub-menu>
+        <template v-for="item in userMenus" :key="item.id">
+          <!-- 子菜单 -->
+          <el-sub-menu :index="item.id + ''">
+            <template #title>
+              <span>{{ item.name }}</span>
+            </template>
 
-        <el-sub-menu index="2">
-          <template #title>
-            <el-icon><location /></el-icon>
-            <span>系统管理</span>
-          </template>
-          <el-menu-item>用户管理</el-menu-item>
-          <el-menu-item>部门管理</el-menu-item>
-          <el-menu-item>菜单管理</el-menu-item>
-          <el-menu-item>角色管理</el-menu-item>
-        </el-sub-menu>
+            <!-- 子菜单的每一项 -->
+            <template v-for="subItem in item.children" :key="subItem.id">
+              <el-menu-item :index="subItem.id + ''">{{ subItem.name }}</el-menu-item>
+            </template>
+          </el-sub-menu>
+        </template>
       </el-menu>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import useLoginStore from '@/store/login/login';
+
+const loginStore = useLoginStore();
+const userMenus = loginStore.userMenus
+console.log(userMenus);
+
+</script>
 
 <style lang="less" scoped>
 .main-menu {

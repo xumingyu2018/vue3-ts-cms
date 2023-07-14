@@ -14,8 +14,8 @@ const useLoginStore = defineStore('login', {
     state: (): ILoginState => ({
         // token: localStorage.getItem('token') ?? '',
         token: localCache.getCache('token') ?? '',
-        userInfo: {},
-        userMenus: {}
+        userInfo: localCache.getCache('userInfo') ?? {},
+        userMenus: localCache.getCache('userMenus') ?? []
     }),
 
     actions: {
@@ -26,7 +26,7 @@ const useLoginStore = defineStore('login', {
             const id = loginResult.data.id
             this.token = loginResult.data.token
 
-            // 2. 进行本地缓存（使用封装的cache工具）
+            // 2. 本地缓存token（使用封装的cache工具）
             // localStorage.setItem('token', this.token)
             localCache.setCache('token', this.token)
 
@@ -37,6 +37,10 @@ const useLoginStore = defineStore('login', {
             // 4.根据角色请求用户的权限（菜单menus）
             const userMenusResult = await getUserMenusByRoleId(this.userInfo.role.id)
             this.userMenus = userMenusResult.data
+
+            // 5.进行用户权限信息缓存
+            localCache.setCache('userInfo', this.userInfo)
+            localCache.setCache('userMenus', this.userMenus)
 
             //  页面跳转
             router.push('/main')
