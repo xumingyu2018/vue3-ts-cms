@@ -1,11 +1,15 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="210px">
-        <main-menu/>
+      <el-aside :width="isFold ? '60px' : '210px'">
+        <!-- 父传子（defineProps） -->
+        <main-menu :is-fold="isFold"/>
       </el-aside>
       <el-container>
-        <el-header height="50px">Header</el-header>
+        <el-header height="50px">
+          <!-- emit子传父（defineEmits） -->
+          <main-header @fold-change="handleFoldChange"/>
+        </el-header>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
@@ -13,20 +17,20 @@
 </template>
 
 <script setup lang="ts">
-import { localCache } from '@/utils/cache';
+import { localCache } from '@/utils/cache'; 
 import { useRouter } from 'vue-router';
 import MainMenu from '@/components/main-menu/main-menu.vue'
+import MainHeader from '@/components/main-header/main-header.vue'
+import { ref } from 'vue';
 
-const router = useRouter()
-const handleExitClick = () => {
-  localCache.deleteCache('token')
-  router.push('/login')
+const isFold = ref(false)
+function handleFoldChange(isFoldValue: boolean) {
+  isFold.value = isFoldValue
 }
 </script>
 
 <style lang="less" scoped>
 .main {
-  color: red;
   height: 100%;
 
   .main-content {

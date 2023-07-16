@@ -2,7 +2,7 @@
   <div class="main-menu">
     <div class="logo">
       <img class="img" src="@/assets/img/logo.svg" alt="图标" />
-      <h2 class="title">后台管理系统</h2>
+      <h2 class="title" v-show="!isFold">后台管理系统</h2>
     </div>
     <div class="menu">
       <el-menu
@@ -38,6 +38,13 @@ import useLoginStore from '@/store/login/login';
 
 const loginStore = useLoginStore();
 const userMenus = loginStore.userMenus
+
+defineProps({
+  isFold: {
+    type: Boolean,
+    default: false
+  }
+})
 
 </script>
 
