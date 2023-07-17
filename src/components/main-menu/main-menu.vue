@@ -24,7 +24,7 @@
 
             <!-- 子菜单的每一项 -->
             <template v-for="subItem in item.children" :key="subItem.id">
-              <el-menu-item :index="subItem.id + ''">{{ subItem.name }}</el-menu-item>
+              <el-menu-item :index="subItem.id + ''" @click="handleItemClick(subItem)">{{ subItem.name }}</el-menu-item>
             </template>
           </el-sub-menu>
         </template>
@@ -34,6 +34,7 @@
 </template>
 
 <script setup lang="ts">
+import router from '@/router';
 import useLoginStore from '@/store/login/login';
 
 const loginStore = useLoginStore();
@@ -45,6 +46,11 @@ defineProps({
     default: false
   }
 })
+
+function handleItemClick(subItem: any) {
+  const url = subItem.url
+  router.push(url)
+}
 
 </script>
 

@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { accountLogin, getUserInfoById, getUserMenusByRoleId } from '@/service/login/login'
 import type { IAccount } from "@/types";
 import { localCache } from "@/utils/cache";
+import { mapMenuToRoutes } from "@/utils/map-menus";
 import router from "@/router";
 
 interface ILoginState {
@@ -41,6 +42,11 @@ const useLoginStore = defineStore('login', {
             // 5.进行用户权限信息缓存
             localCache.setCache('userInfo', this.userInfo)
             localCache.setCache('userMenus', this.userMenus)
+
+            // 6.根据菜单menu动态加载路由(使用工具类map-menus.ts)
+            const routes = mapMenuToRoutes(this.userMenus)
+            // 这里的'main'是根据路由里的name属性来的
+            routes.forEach(route => router.addRoute('main', route))
 
             //  页面跳转
             router.push('/main')
