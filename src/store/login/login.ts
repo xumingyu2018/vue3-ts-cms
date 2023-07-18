@@ -8,15 +8,15 @@ import router from "@/router";
 interface ILoginState {
     token: string,
     userInfo: any,
-    userMenus: any
+    userMenus: any[]
 }
 
 const useLoginStore = defineStore('login', {
     state: (): ILoginState => ({
         // token: localStorage.getItem('token') ?? '',
-        token: localCache.getCache('token') ?? '',
-        userInfo: localCache.getCache('userInfo') ?? {},
-        userMenus: localCache.getCache('userMenus') ?? []
+        token: '',
+        userInfo: {},
+        userMenus: []
     }),
 
     actions: {
@@ -43,13 +43,26 @@ const useLoginStore = defineStore('login', {
             localCache.setCache('userInfo', this.userInfo)
             localCache.setCache('userMenus', this.userMenus)
 
-            // 6.根据菜单menu动态加载路由(使用工具类map-menus.ts)
-            const routes = mapMenuToRoutes(this.userMenus)
-            // 这里的'main'是根据路由里的name属性来的
-            routes.forEach(route => router.addRoute('main', route))
-
             //  页面跳转
             router.push('/main')
+        },
+
+        // 解决刷新页面后，动态路由丢失的问题(不再是loginAccountAction登录时才执行)
+        loadLocalDataAction() {  
+            // 用户进行刷新时默认加载数据
+            const token = localCache.getCache('token')
+            const userInfo = localCache.getCache('userInfo')
+            const userMenus = localCache.getCache('userMenus')
+
+            if(token && userInfo && userMenus) {
+                this.token = token
+                this.userInfo = userInfo
+                this.userMenus = userMenus
+                // 6.根据菜单menu动态加载路由(使用工具类map-menus.ts)
+                const routes = mapMenuToRoutes(userMenus)
+                // 这里的'main'是根据路由里的name属性来的
+                routes.forEach(route => router.addRoute('main', route))
+            }
         }
     }
 })
