@@ -6,7 +6,9 @@
       </el-icon>
     </div>
     <div class="content">
-      <div class="breadcrumb">面包屑</div>
+      <div class="breadcrumb">
+        <header-crumb/>
+      </div>
       <div class="info">
         <header-info/>
       </div>
@@ -17,6 +19,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import headerInfo from '@/components/main-header/cpns/header-info.vue'
+import headerCrumb from '@/components/main-header/cpns/header-crumb.vue'
 
 // 1.内部自定义事件
 const emit = defineEmits(['foldChange'])

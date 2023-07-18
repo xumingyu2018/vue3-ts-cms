@@ -28,9 +28,14 @@ export function mapMenuToRoutes(menus: any[]) {
     const finalRoutes: RouteRecordRaw[] = []
     for(const menu of menus) {
         for(const submenu of menu.children) {
-            const menuUrl = submenu.url
-            const route = loadRoutes.find(route => route.path === menuUrl)
-            if(route) finalRoutes.push(route)
+            const route = loadRoutes.find(route => route.path === submenu.url)
+            if(route) {
+                // 给route的顶层菜单增加重定向功能（但是只需要添加一次即可）
+                if(!finalRoutes.find((item) => item.path === route.path)) {
+                    finalRoutes.push({ path: menu.url, redirect: route})
+                }
+                finalRoutes.push(route)
+            }
             // 记录第一个被匹配菜单
             if(!firstMenu && route) firstMenu = submenu
         }
@@ -49,6 +54,20 @@ export function mapPathToMenu(menus: any[], path: string) {
     for (const menu of menus) {
       for (const submenu of menu.children) {
         if (path === submenu.url) return submenu
+      }
+    }
+}
+
+export function mapPathToBreadCrumb(menus: any[], path: string) {
+    const breadCrumb: any[] = []
+    
+    for (const menu of menus) {
+      for (const submenu of menu.children) {
+        if (path === submenu.url){
+            breadCrumb.push(menu)
+            breadCrumb.push(submenu)
+            return breadCrumb
+        }
       }
     }
 }

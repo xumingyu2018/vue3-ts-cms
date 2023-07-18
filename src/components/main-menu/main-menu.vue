@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import useLoginStore from '@/store/login/login';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { mapPathToMenu } from '@/utils/map-menus';
 
@@ -59,8 +59,10 @@ function handleItemClick(subItem: any) {
 
 // 3.页面刷新时，根据当前的路由地址，设置默认选中的菜单项(默认值问题)
 const route = useRoute()
-const currentMenu = mapPathToMenu(userMenus, route.path)
-const defaultValue = ref<string>(currentMenu.id + '')
+const defaultValue = computed(() => {
+  const currentMenu = mapPathToMenu(userMenus, route.path)
+  return currentMenu.id + ''
+})
 
 </script>
 
