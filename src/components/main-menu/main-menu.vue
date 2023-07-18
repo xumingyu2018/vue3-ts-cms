@@ -34,11 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/router';
 import useLoginStore from '@/store/login/login';
-
-const loginStore = useLoginStore();
-const userMenus = loginStore.userMenus
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { mapPathToMenu } from '@/utils/map-menus';
 
 defineProps({
   isFold: {
@@ -47,10 +46,21 @@ defineProps({
   }
 })
 
+// 1.存放动态的菜单
+const loginStore = useLoginStore();
+const userMenus = loginStore.userMenus
+
+// 2.监听item的点击
+const router = useRouter()
 function handleItemClick(subItem: any) {
   const url = subItem.url
   router.push(url)
 }
+
+// 3.页面刷新时，根据当前的路由地址，设置默认选中的菜单项(默认值问题)
+const route = useRoute()
+const currentMenu = mapPathToMenu(userMenus, route.path)
+const defaultValue = ref<string>(currentMenu.id + '')
 
 </script>
 

@@ -38,3 +38,17 @@ export function mapMenuToRoutes(menus: any[]) {
 
     return finalRoutes
 }
+
+/**
+ * 映射路由到菜单
+ * @param path 路由url
+ * @param menus 菜单
+ * @returns 菜单
+ */
+export function mapPathToMenu(menus: any[], path: string) {
+    for (const menu of menus) {
+      for (const submenu of menu.children) {
+        if (path === submenu.url) return submenu
+      }
+    }
+}
