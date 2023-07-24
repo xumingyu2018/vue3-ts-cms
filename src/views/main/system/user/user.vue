@@ -1,14 +1,12 @@
 <template>
   <div class="user">
     <user-search />
-    <div class="content">
-      <div>头部</div>
-      <div>表格</div>
-    </div>
+    <user-content />
   </div>
 </template>
 
 <script setup lang="ts">
+import userContent from './cpns/user-content.vue'
 import userSearch from './cpns/user-search.vue' 
 </script>
 
