@@ -14,7 +14,19 @@
             <el-table-column align="center" prop="name" label="用户名" width="150px" />
             <el-table-column align="center" prop="realname" label="真实姓名" width="150px"/>
             <el-table-column align="center" prop="cellphone" label="电话号码" width="150px"/>
-            <el-table-column align="center" prop="enable" label="状态" width="100px"/>
+            <el-table-column align="center" prop="enable" label="状态" width="100px">
+                <!-- 作用域插槽 -->
+                <template #default="{ row }">
+                    <el-button size="small" :type="row.enable ? 'primary' : 'danger'" plain>
+                        {{ row.enable ? '启用' : '禁用' }}
+                    </el-button>
+                </template>
+                <!-- <template #default="scope">
+                    <el-button size="small" :type="scope.row.enable ? 'primary' : 'danger'" plain>
+                        {{ scope.row.enable ? '启用' : '禁用' }}
+                    </el-button>
+                </template> -->
+            </el-table-column>
             <el-table-column align="center" prop="createAt" label="创建时间" />
             <el-table-column align="center" prop="updateAt" label="更新时间" />
 
