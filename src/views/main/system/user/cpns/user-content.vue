@@ -19,9 +19,9 @@
             <el-table-column align="center" prop="enable" label="状态" width="100px">
                 <!-- 作用域插槽 -->
                 <template #default="{ row }">
-                    <el-button size="small" :type="row.enable ? 'primary' : 'danger'" plain>
+                    <el-tag size="small" :type="row.enable ? 'primary' : 'danger'">
                         {{ row.enable ? '启用' : '禁用' }}
-                    </el-button>
+                    </el-tag>
                 </template>
                 <!-- <template #default="scope">
                     <el-button size="small" :type="scope.row.enable ? 'primary' : 'danger'" plain>
@@ -50,7 +50,18 @@
             </el-table-column>
         </el-table>
       </div>
-      <div class="pagination">分页</div>
+      <div class="pagination">
+        <el-pagination
+            v-model:current-page="currentPage"
+            v-model:page-size="pageSize"
+            :page-sizes="[10, 20, 30]"
+            :small="small"
+            layout="sizes, prev, pager, next, jumper, total"
+            :total="usersTotalCount"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+        />
+      </div>
     </div>
 </template>
 
@@ -58,14 +69,35 @@
 import useSystemStore from '@/store/main/system/system';
 import { storeToRefs } from 'pinia';
 import { formatUTC } from '@/utils/format';
+import { ref } from 'vue';
 
 // 1.发起action，请求usersList数据 
 const systemStore = useSystemStore()
-systemStore.getUsersListAction()
+const currentPage = ref(1)
+const pageSize = ref(10)
+fetchUserListData()
 
-// 2.获取usersList数据(响应式数据：上面代码是异步的，当数据还没拿到是，这一句不起作用，需要用storeToRefs)
-const { usersList } = storeToRefs(systemStore)
-console.log(usersList);
+// 2.获取usersList和usersTotalCount数据(响应式数据：上面代码是异步的，当数据还没拿到是，这一句不起作用，需要用storeToRefs)
+const { usersList, usersTotalCount } = storeToRefs(systemStore)
+
+// 3.分页功能
+function handleSizeChange() {
+    fetchUserListData()
+}
+
+function handleCurrentChange() {
+    fetchUserListData()
+}
+
+// 4.定义函数，用于发送网络请求
+function fetchUserListData() {
+    const size = pageSize.value
+    const offset = (currentPage.value - 1) * size
+    const info = { size, offset}
+
+    // 发起网络请求
+    systemStore.getUsersListAction(info)
+}
 </script>
 
 <style lang="less" scoped>
@@ -95,6 +127,12 @@ console.log(usersList);
         margin-left: 0;
         padding: 5px 8px;
     }
+}
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;    
 }
 
 </style>

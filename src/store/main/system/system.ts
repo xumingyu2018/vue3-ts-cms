@@ -8,9 +8,9 @@ const useSystemStore = defineStore('system', {
         usersTotalCount: 0
     }),
     actions: {
-        async getUsersListAction() {
+        async getUsersListAction(queryInfo: any) {
             // 调用axios请求
-            const userListResult = await getUserListData()
+            const userListResult = await getUserListData(queryInfo)
             const { totalCount, list } = userListResult.data
             // 存入store中
             this.usersList = list
