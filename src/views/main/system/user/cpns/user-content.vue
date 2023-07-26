@@ -14,6 +14,8 @@
             <el-table-column align="center" prop="name" label="用户名" width="150px" />
             <el-table-column align="center" prop="realname" label="真实姓名" width="150px"/>
             <el-table-column align="center" prop="cellphone" label="电话号码" width="150px"/>
+
+            <!-- 自定义table -->
             <el-table-column align="center" prop="enable" label="状态" width="100px">
                 <!-- 作用域插槽 -->
                 <template #default="{ row }">
@@ -27,8 +29,20 @@
                     </el-button>
                 </template> -->
             </el-table-column>
-            <el-table-column align="center" prop="createAt" label="创建时间" />
-            <el-table-column align="center" prop="updateAt" label="更新时间" />
+
+            <!-- 自定义table -->
+            <el-table-column align="center" prop="createAt" label="创建时间" >
+                <template #default="scope">
+                    {{ formatUTC(scope.row.createAt) }}
+                </template>
+            </el-table-column>
+
+            <!-- 自定义table -->
+            <el-table-column align="center" prop="updateAt" label="更新时间" >
+                <template #default="scope">
+                    {{ formatUTC(scope.row.updateAt) }}
+                </template>
+            </el-table-column>
 
             <el-table-column align="center" label="操作" width="150px">
                 <el-button type="primary" icon="Edit" size="small" text>编辑</el-button>
@@ -43,8 +57,9 @@
 <script setup>
 import useSystemStore from '@/store/main/system/system';
 import { storeToRefs } from 'pinia';
+import { formatUTC } from '@/utils/format';
 
-// 1.发起action，请求usersList数据
+// 1.发起action，请求usersList数据 
 const systemStore = useSystemStore()
 systemStore.getUsersListAction()
 
