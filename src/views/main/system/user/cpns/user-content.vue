@@ -45,8 +45,10 @@
             </el-table-column>
 
             <el-table-column align="center" label="操作" width="150px">
-                <el-button type="primary" icon="Edit" size="small" text>编辑</el-button>
-                <el-button type="danger " icon="Delete" size="small" text>删除</el-button>
+                <template #default="scope">
+                    <el-button type="primary" icon="Edit" size="small" text>编辑</el-button>
+                    <el-button type="danger" icon="Delete" size="small" text @click="handleDeleteClick(scope.row.id)">删除</el-button>
+                </template>
             </el-table-column>
         </el-table>
       </div>
@@ -99,6 +101,11 @@ function fetchUserListData(formData = {}) {
     const queryInfo = { ...formData, ...pageInfo }
     // 发起网络请求
     systemStore.getUsersListAction(queryInfo)
+}
+
+// 删除用户数据
+function handleDeleteClick(id) {
+    systemStore.deleteUserDataAction(id)
 }
 
 // 暴露函数给父组件

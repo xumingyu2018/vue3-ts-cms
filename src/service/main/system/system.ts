@@ -7,3 +7,10 @@ export function getUserListData(queryInfo: any) {
         data: queryInfo
     })
 }
+
+// 删除用户数据
+export function deleteUserData(id: number) {
+    return hyRequest.delete({
+        url: `/users/${id}`
+    })
+}   
