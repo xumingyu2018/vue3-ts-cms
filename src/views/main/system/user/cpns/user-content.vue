@@ -2,7 +2,7 @@
     <div class="content">
       <div class="header">
         <h2 class="title">用户列表</h2>
-        <el-button type="primary">新建用户</el-button>
+        <el-button type="primary" @click="handleNewData">新建用户</el-button>
       </div>
       <div class="table">
         <el-table :data="usersList" border style="width: 100%">
@@ -73,6 +73,8 @@ import { storeToRefs } from 'pinia';
 import { formatUTC } from '@/utils/format';
 import { ref } from 'vue';
 
+const emit = defineEmits(['newDataClick'])
+
 // 1.发起action，请求usersList数据 
 const systemStore = useSystemStore()
 const currentPage = ref(1)
@@ -103,9 +105,14 @@ function fetchUserListData(formData = {}) {
     systemStore.getUsersListAction(queryInfo)
 }
 
-// 删除用户数据
+// 5.删除用户功能
 function handleDeleteClick(id) {
     systemStore.deleteUserDataAction(id)
+}
+
+// 6.新建用户功能
+function handleNewData() {
+    emit('newDataClick')
 }
 
 // 暴露函数给父组件
