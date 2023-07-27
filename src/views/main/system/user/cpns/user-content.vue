@@ -89,15 +89,22 @@ function handleCurrentChange() {
     fetchUserListData()
 }
 
-// 4.定义函数，用于发送网络请求
-function fetchUserListData() {
+
+// 4.定义函数，用于发送网络请求  
+function fetchUserListData(formData = {}) {
     const size = pageSize.value
     const offset = (currentPage.value - 1) * size
-    const info = { size, offset}
+    const pageInfo = { size, offset}
 
+    const queryInfo = { ...formData, ...pageInfo }
     // 发起网络请求
-    systemStore.getUsersListAction(info)
+    systemStore.getUsersListAction(queryInfo)
 }
+
+// 暴露函数给父组件
+defineExpose({
+    fetchUserListData
+})
 </script>
 
 <style lang="less" scoped>

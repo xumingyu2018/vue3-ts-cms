@@ -43,7 +43,7 @@
 
     <div class="btns">
         <el-button icon="Refresh" size="large" @click="handleResetClick()">重置</el-button>
-        <el-button icon="Search" size="large" type="primary">搜索</el-button>
+        <el-button icon="Search" size="large" type="primary" @click = "handleQueryClick()">搜索</el-button>
     </div>
   </div>
 </template>
@@ -51,6 +51,8 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import type { ElForm } from "element-plus";
+
+const emit = defineEmits(['queryClick', 'resetClick'])
 
 const searchForm = reactive({
     name: '',
@@ -72,6 +74,14 @@ function handleResetClick() {
 
     // 方法二
     formRef.value?.resetFields()
+    // 发送请求重置查找
+    emit('resetClick')
+}
+
+// 搜索功能
+function handleQueryClick() {
+    // 通过事件抛出（子传父）
+    emit('queryClick', searchForm)
 }
 </script>
 
