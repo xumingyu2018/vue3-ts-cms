@@ -16,10 +16,18 @@
                 <el-input v-model="formData.cellphone" placeholder="请输入电话号码"></el-input>
             </el-form-item>
             <el-form-item label="选择角色" prop="roleId">
-                <el-select v-model="formData.roleId" placeholder="请选择角色"></el-select>
+                <el-select v-model="formData.roleId" placeholder="请选择角色" style="width: 100%">
+                    <template v-for="item in entireRoles" :key="item.id">
+                        <el-option :label="item.name" :value="item.id"/>
+                    </template>
+                </el-select>
             </el-form-item>
             <el-form-item label="选择部门" prop="departmentId">
-                <el-select v-model="formData.departmentId" placeholder="请选择部门"></el-select>
+                <el-select v-model="formData.departmentId" placeholder="请选择部门" style="width: 100%">
+                    <template v-for="item in entireDepartments" :key="item.id">
+                        <el-option :label="item.name" :value="item.id"/>
+                    </template>
+                </el-select>
             </el-form-item>
         </el-form>
     </div>
@@ -35,6 +43,8 @@
 
 <script setup lang="ts">
 import { reactive, ref } from "vue";
+import useMainStore from "@/store/main/main";
+import { storeToRefs } from "pinia";
 
 const dialogVisible = ref(false)
 const formData = reactive({
@@ -45,6 +55,10 @@ const formData = reactive({
     roleId: '',
     departmentId: ''
 })
+
+// 获取roles/departments数据
+const mainStore = useMainStore()
+const { entireRoles, entireDepartments } = storeToRefs(mainStore)
 
 function setDialogVisible() {
   dialogVisible.value = true
