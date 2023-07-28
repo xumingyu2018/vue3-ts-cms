@@ -14,3 +14,11 @@ export function deleteUserData(id: number) {
         url: `/users/${id}`
     })
 }   
+
+// 新建用户数据
+export function newUserData(userInfo: any) {
+    return hyRequest.post({
+        url: '/users',
+        data: userInfo
+    })
+}
