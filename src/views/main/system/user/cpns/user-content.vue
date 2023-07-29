@@ -46,7 +46,7 @@
 
             <el-table-column align="center" label="操作" width="150px">
                 <template #default="scope">
-                    <el-button type="primary" icon="Edit" size="small" text>编辑</el-button>
+                    <el-button type="primary" icon="Edit" size="small" text @click="handleEditClick(scope.row)">编辑</el-button>
                     <el-button type="danger" icon="Delete" size="small" text @click="handleDeleteClick(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
@@ -73,7 +73,7 @@ import { storeToRefs } from 'pinia';
 import { formatUTC } from '@/utils/format';
 import { ref } from 'vue';
 
-const emit = defineEmits(['newDataClick'])
+const emit = defineEmits(['newDataClick', 'editDataClick'])
 
 // 1.发起action，请求usersList数据 
 const systemStore = useSystemStore()
@@ -113,6 +113,11 @@ function handleDeleteClick(id) {
 // 6.新建用户功能
 function handleNewData() {
     emit('newDataClick')
+}
+
+// 7.编辑用户功能
+function handleEditClick(itemData) {
+    emit('editDataClick', itemData)
 }
 
 // 暴露函数给父组件

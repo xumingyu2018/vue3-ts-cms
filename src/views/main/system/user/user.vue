@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <user-search @query-click="handleQueryClick" @reset-click="handleResetClick"/>
-    <user-content ref="contentRef" @new-data-click="handleNewDataClick"/>
+    <user-content ref="contentRef" @new-data-click="handleNewDataClick" @edit-data-click="handleEditDataClick"/>
     <user-modal ref="modalRef"/>
   </div>
 </template>
@@ -26,6 +26,10 @@ function handleResetClick() {
 // 新增用户功能
 function handleNewDataClick() {
   modalRef.value?.setDialogVisible()
+}
+// 编辑用户功能
+function handleEditDataClick(itemData: any) {
+  modalRef.value?.setDialogVisible(false, itemData)
 }
 </script>
 
