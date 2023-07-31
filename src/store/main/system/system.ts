@@ -1,11 +1,15 @@
-import { deleteUserData, editUserData, getUserListData, newUserData } from "@/service/main/system/system";
+import { deleteUserData, editUserData, getUserListData, newUserData, deletePageData, editPageData, getPageListData, newPageData } from "@/service/main/system/system";
 import { defineStore } from "pinia";
 import type { ISystemState } from "./type";
 
 const useSystemStore = defineStore('system', {
     state: (): ISystemState => ({
         usersList: [],
-        usersTotalCount: 0
+        usersTotalCount: 0,
+
+        // 抽取公共页面数据
+        pageList: [],
+        pageTotalCount: 0
     }),
     actions: {
         // 获取用户数据列表
@@ -38,7 +42,29 @@ const useSystemStore = defineStore('system', {
         async editUserDataAction(id: number, userInfo: any) {
             const editResult = await editUserData(id, userInfo)
             this.getUsersListAction({ offset: 0, size: 10 })
+        },
+
+        // 抽取公共页面action
+        async getPageListDataAction(pageName: string, queryInfo: any) {
+            // 1.请求用户列表数据
+            const pageListResult = await getPageListData(pageName, queryInfo)
+            const { list, totalCount } = pageListResult.data
+            this.pageList = list
+            this.pageTotalCount = totalCount
+        },
+        async deletePageDataAction(pageName: string, id: number) {
+            const res = await deletePageData(pageName, id)
+            this.getPageListDataAction(pageName, { offset: 0, size: 10 })
+        },
+        async newPageDataAction(pageName: string, pageData: any) {
+            const res = await newPageData(pageName, pageData)
+            this.getPageListDataAction(pageName, { offset: 0, size: 10 })
+        },
+        async editPageDataAction(pageName: string, id: number, pageData: any) {
+            const res = await editPageData(pageName, id, pageData)
+            this.getPageListDataAction(pageName, { offset: 0, size: 10 })
         }
+                
     }
 })
 

@@ -13,4 +13,8 @@ export interface IUser {
 export interface ISystemState {
     usersList: IUser[]
     usersTotalCount: number
+
+    // 抽取公共页面数据
+    pageList: any[]
+    pageTotalCount: number
 }
