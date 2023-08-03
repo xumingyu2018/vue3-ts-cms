@@ -30,6 +30,16 @@
             </el-table-column>            
           </template>
 
+          <!-- 自定义插槽定制处理(通用) -->
+          <!-- <template v-else-if="item.type === 'custom'">
+            <el-table-column align="center" v-bind="item">
+              <template #default="scope">
+                给用户预留定制插槽
+                <slot :name="item.slotName" v-bind="scope" :prop="item.prop"></slot>
+              </template>
+            </el-table-column>
+          </template> -->
+
           <!-- 处理普通类型 -->
           <template v-else>
             <!-- <el-table-column align="center" :type="item.type" :prop="item.prop" :label="item.label" :width="item.width" /> 相当于下面-->

@@ -1,9 +1,21 @@
 <template>
   <div class="department">
     <page-search @query-click="handleQueryClick" @reset-click="handleResetClick" :search-config="searchConfig"/>
-    <page-content ref="contentRef" @new-data-click="handleNewDataClick" @edit-data-click="handleEditDataClick" :content-config="contentConfig"/>
-    <page-modal ref="modalRef" />
 
+    <page-content ref="contentRef" @new-data-click="handleNewDataClick" @edit-data-click="handleEditDataClick" :content-config="contentConfig">
+      <!-- <template #leader="scope">
+        <span style="color: red;">
+          {{ scope.row[scope.prop] }}
+        </span>
+      </template>
+      <template #parent="scope">
+        <el-tag>
+          {{ scope.row[scope.prop] }}
+        </el-tag>
+      </template> -->
+    </page-content>
+
+    <page-modal ref="modalRef" />
   </div>
 </template>
 
