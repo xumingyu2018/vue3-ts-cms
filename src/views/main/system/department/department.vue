@@ -1,7 +1,7 @@
 <template>
   <div class="department">
     <page-search @query-click="handleQueryClick" @reset-click="handleResetClick" :search-config="searchConfig"/>
-    <page-content ref="contentRef" @new-data-click="handleNewDataClick" @edit-data-click="handleEditDataClick"/>
+    <page-content ref="contentRef" @new-data-click="handleNewDataClick" @edit-data-click="handleEditDataClick" :content-config="contentConfig"/>
     <page-modal ref="modalRef" />
 
   </div>
@@ -9,11 +9,12 @@
 
 <script setup lang="ts" name="department">
 import pageSearch from '@/components/page-search/page-search.vue'
-import PageContent from './cpns/page-content.vue'
+import PageContent from '@/components/page-content/page-content.vue'
 import PageModal from './cpns/page-modal.vue'
 import { ref } from 'vue'
 
 import searchConfig from './config/search.config'
+import contentConfig from './config/content.config'
 
 const contentRef = ref<InstanceType<typeof PageContent>>()
 const modalRef = ref<InstanceType<typeof PageModal>>()
