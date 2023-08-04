@@ -70,11 +70,13 @@ import { ref } from 'vue'
 
 interface IProps {
   contentConfig: {
+    // 用于处理接口方法中传入的pageName参数
+    pageName: string,
     header?: {
-      title?: string
+      title?: string,
       btnTitle: string
     },
-    propsList: any[],
+    propsList: any[]
   }
 }
 
@@ -86,13 +88,15 @@ const emit = defineEmits(['newDataClick', 'editDataClick'])
 const systemStore = useSystemStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
-function fetchPageListData(queryInfo: any = {}) {
+function fetchPageListData(formData: any = {}) {
   // 1.获取offset和size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
+  const pageInfo = { size, offset}
 
-  // 2.发生网络请求
-  systemStore.getPageListDataAction('department', { offset, size, ...queryInfo })
+  // 2.发起网络请求
+  const queryInfo = { ...pageInfo, ...formData}
+  systemStore.getPageListDataAction(props.contentConfig.pageName, { offset, size, ...queryInfo })
 }
 fetchPageListData()
 
@@ -116,7 +120,7 @@ function handleNewData() {
 
 // 5.删除和编辑操作
 function handleDeleteClick(id: number) {
-  systemStore.deletePageDataAction('department', id)
+  systemStore.deletePageDataAction(props.contentConfig.pageName, id)
 }
 
 function handleEditClick(data: any) {
