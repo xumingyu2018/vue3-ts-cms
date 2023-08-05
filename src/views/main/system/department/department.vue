@@ -15,18 +15,19 @@
       </template> -->
     </page-content>
 
-    <page-modal ref="modalRef" />
+    <page-modal ref="modalRef" :modal-config="modalConfig"/>
   </div>
 </template>
 
 <script setup lang="ts" name="department">
 import pageSearch from '@/components/page-search/page-search.vue'
 import PageContent from '@/components/page-content/page-content.vue'
-import PageModal from './cpns/page-modal.vue'
+import PageModal from '@/components/page-modal/page-modal.vue'
 import { ref } from 'vue'
 
 import searchConfig from './config/search.config'
 import contentConfig from './config/content.config'
+import modalConfig from './config/modal.config'
 
 const contentRef = ref<InstanceType<typeof PageContent>>()
 const modalRef = ref<InstanceType<typeof PageModal>>()
