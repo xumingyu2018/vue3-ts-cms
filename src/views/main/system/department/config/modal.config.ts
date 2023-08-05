@@ -22,10 +22,7 @@ const modalConfig = {
             type: 'select',
             prop: 'parentId',
             label: '上级部门',
-            options: [
-                { label: '部门1', value: '1' },
-                { label: '部门2', value: '2' },
-            ]
+            options: []
         }
     ]
 }
