@@ -29,6 +29,8 @@ import searchConfig from './config/search.config'
 import contentConfig from './config/content.config'
 import modalConfig from './config/modal.config'
 import useMainStore from '@/store/main/main'
+import { usePageContent } from '@/hooks/usePageContent'
+import { usePageModal } from '@/hooks/usePageModal'
 
 // 对modalConfig进行操作，用于select中的options来自于接口数据
 const modalConfigRef = computed(() => {
@@ -45,25 +47,11 @@ const modalConfigRef = computed(() => {
   return modalConfig
 })
 
-const contentRef = ref<InstanceType<typeof PageContent>>()
-const modalRef = ref<InstanceType<typeof PageModal>>()
-// 搜索功能
-function handleQueryClick(searchInfo: any) {
-  console.log(searchInfo);
-  contentRef.value?.fetchPageListData(searchInfo)
-} 
-// 重置功能
-function handleResetClick() {
-  contentRef.value?.fetchPageListData()
-}
-// 新增功能
-function handleNewDataClick() {
-  modalRef.value?.setDialogVisible()
-}
-// 编辑功能
-function handleEditDataClick(itemData: any) {
-  modalRef.value?.setDialogVisible(false, itemData)
-}
+// 抽取成hooks
+const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
+
+const { modalRef, handleEditDataClick, handleNewDataClick } = usePageModal()
+
 </script>
 
 <style scoped>
