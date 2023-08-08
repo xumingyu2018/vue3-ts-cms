@@ -5,7 +5,7 @@
       <el-button type="primary" @click="handleNewData">{{ contentConfig?.header?.btnTitle ?? '新建数据' }}</el-button>
     </div>
     <div class="table">
-      <el-table :data="pageList" :border="true" style="width: 100%">
+      <el-table :data="pageList" :border="true" style="width: 100%" v-bind="contentConfig.childrenTree">
         <template v-for="item in contentConfig.propsList" :key="item.prop">
           <!-- 处理带自定义插槽的时间格式类型 -->
           <template v-if="item.type === 'timer'">
@@ -76,7 +76,8 @@ interface IProps {
       title?: string,
       btnTitle: string
     },
-    propsList: any[]
+    propsList: any[],
+    childrenTree: any[]
   }
 }
 
