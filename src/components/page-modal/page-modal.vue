@@ -59,6 +59,7 @@ interface IProps {
     pageName: string,
     formItems: any[]
   }
+  otherInfo?: any
 }
 
 // 定义props
@@ -75,10 +76,17 @@ const formData = reactive<any>(initialForm)
 const systemStore = useSystemStore()
 function handleConfirmClick() {
   dialogVisible.value = false
+
+  // 若有其它info进行合并发送给服务器（如：角色管理中新建角色的权限分配菜单树menuList）
+  let infoData = formData
+  if(props.otherInfo) {
+    infoData = { ...formData, ...props.otherInfo}
+  }
+
   if (!isEdit.value) {
-    systemStore.newPageDataAction(props.modalConfig.pageName, formData)
+    systemStore.newPageDataAction(props.modalConfig.pageName, infoData)
   } else {
-    systemStore.editPageDataAction(props.modalConfig.pageName, editData.value.id, formData)
+    systemStore.editPageDataAction(props.modalConfig.pageName, editData.value.id, infoData)
   }
 }
 
