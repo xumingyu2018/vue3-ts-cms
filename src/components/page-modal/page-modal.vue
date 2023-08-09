@@ -16,6 +16,12 @@
                   </template>
                 </el-select>
               </template>
+
+              <!-- 自定义插槽：如角色管理中的权限树形选择 -->
+              <template v-if="item.type === 'custom'">
+                <slot :name="item.slotName"></slot>
+              </template>
+
             </el-form-item>
           </template>
         </el-form>

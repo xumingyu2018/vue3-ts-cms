@@ -17,6 +17,7 @@ const modalConfig = {
         prop: 'intro',
         placeholder: '请输入权限介绍'
       },
+      // 自定义类型
       {
         type: 'custom',
         slotName: 'menulist'
