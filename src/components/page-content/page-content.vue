@@ -8,7 +8,7 @@
       <el-table :data="pageList" :border="true" style="width: 100%" v-bind="contentConfig.childrenTree">
         <template v-for="item in contentConfig.propsList" :key="item.prop">
           <!-- 处理带自定义插槽的时间格式类型 -->
-          <template v-if="item.type === 'timer'">
+          <template v-if="item.type === 'time'">
             <el-table-column align="center" v-bind="item">
               <template #default="scope">
                 {{ formatUTC(scope.row[item.prop]) }}

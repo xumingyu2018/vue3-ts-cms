@@ -16,8 +16,8 @@ const contentConfig = {
         // { type: 'custom', label: '自定义插槽1', prop: 'leader', width: '150px', slotName: 'leader'},
         // { type: 'custom', label: '自定义插槽2', prop: 'parentId', width: '150px', slotName: 'parent'},
 
-        { type: 'timer', prop: 'createAt', label: '创建时间' },
-        { type: 'timer', prop: 'updateAt', label: '更新时间' },
+        { type: 'time', prop: 'createAt', label: '创建时间' },
+        { type: 'time', prop: 'updateAt', label: '更新时间' },
 
         { type: 'handler', label: '操作', width: '180px' },
     ]
