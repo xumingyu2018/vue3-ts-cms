@@ -71,3 +71,25 @@ export function mapPathToBreadCrumb(menus: any[], path: string) {
       }
     }
 }
+
+/**
+ * 菜单映射到id的列表（用于角色管理的权限树分配）
+ * @param menuList 
+ */
+export function mapMenuListToIds(menuList: any[]) {
+  const ids: number[] = []
+
+  function recurseGetId(menus: any[]) {
+    for(const item of menus) {
+      // 如果有子菜单，就递归直到没有子菜单，然后把id添加到ids中
+      if(item.children) {
+        recurseGetId(item.children)
+      } else {
+        ids.push(item.id)
+      }
+    }
+  }
+  
+  recurseGetId(menuList)
+  return ids
+}

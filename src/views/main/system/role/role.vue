@@ -34,12 +34,14 @@ import { usePageContent } from '@/hooks/usePageContent';
 import { usePageModal } from '@/hooks/usePageModal';
 import useMainStore from '@/store/main/main';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
+import { mapMenuListToIds } from '@/utils/map-menus';
+import type { ElTree } from 'element-plus/es/components/index.js';
 
 // hooks逻辑关系
 const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
 
-const { modalRef, handleEditDataClick, handleNewDataClick } = usePageModal()
+const { modalRef, handleEditDataClick, handleNewDataClick } = usePageModal(editCallback)
 
 // 获取完整的菜单
 const mainStore = useMainStore()
@@ -48,9 +50,20 @@ const { entireMenus } = storeToRefs(mainStore)
 // 获取树形列表的key(id)
 const otherInfo = ref({})
 function handleELTreeCheck(data1: any, data2: any) {
-  const menuList = [...data2.checkedKey, ...data2.halfCheckedKeys]
+  const menuList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
   otherInfo.value = { menuList }
 } 
+
+// 编辑角色菜单权限回显
+const treeRef = ref<InstanceType<typeof ElTree>>()
+function editCallback(data: any){
+  nextTick(() => {
+    const menuList = mapMenuListToIds(data.menuList)
+    // 只有在nextTick之后才能设置setCheckedKeys
+    treeRef.value?.setCheckedKeys(menuList)
+  })
+}
+
 </script>
 
 <style lang="less" scoped>
