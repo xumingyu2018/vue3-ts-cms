@@ -1,4 +1,5 @@
 const searchConfig = {
+    pageName: 'department',
     labelWidth: '120px',
     formItems: [
         {
