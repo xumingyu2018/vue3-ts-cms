@@ -136,6 +136,16 @@ function handleEditClick(data: any) {
   emit('editDataClick', data)
 }
 
+// 6.监听systemStore的增删改action,将页面currentPage重置
+systemStore.$onAction(({ name, after }) => {
+  // after表示在action成功执行之后执行（失败时不执行）
+  after(() => {
+    if(name === 'editPageDataAction' || name === 'newPageDataAction' || name === 'deletePageDataAction') {
+      currentPage.value = 1
+    }
+  })
+})
+
 // 暴露函数
 defineExpose({
   fetchPageListData,
