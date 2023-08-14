@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3 class="title">{{ contentConfig?.header?.title ?? '数据列表' }}</h3>
-      <el-button type="primary" @click="handleNewData">{{ contentConfig?.header?.btnTitle ?? '新建数据' }}</el-button>
+      <el-button v-if="isCreate" type="primary" @click="handleNewData">{{ contentConfig?.header?.btnTitle ?? '新建数据' }}</el-button>
     </div>
     <div class="table">
       <el-table :data="pageList" :border="true" style="width: 100%" v-bind="contentConfig.childrenTree">
@@ -20,10 +20,10 @@
           <template v-else-if="item.type === 'handler'">
             <el-table-column align="center" v-bind="item">
               <template #default="scope">
-                <el-button type="primary" size="small" icon="EditPen" link @click="handleEditClick(scope.row)">
+                <el-button v-if="isUpdate" type="primary" size="small" icon="EditPen" link @click="handleEditClick(scope.row)">
                   编辑
                 </el-button>
-                <el-button type="danger" size="small" icon="Delete" link @click="handleDeleteClick(scope.row.id)">
+                <el-button v-if="isDelete" type="danger" size="small" icon="Delete" link @click="handleDeleteClick(scope.row.id)">
                   删除
                 </el-button>
               </template>
@@ -67,6 +67,7 @@ import { storeToRefs } from 'pinia'
 import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format';
 import { ref } from 'vue'
+import usePermission from '@/hooks/usePermission'
 
 interface IProps {
   contentConfig: {
@@ -85,11 +86,18 @@ const props = defineProps<IProps>()
 
 const emit = defineEmits(['newDataClick', 'editDataClick'])
 
+// 0. 获取是否有对应的增删改查权限
+const isCreate = usePermission(props.contentConfig.pageName, 'create')
+const isDelete = usePermission(props.contentConfig.pageName, 'delete')
+const isUpdate = usePermission(props.contentConfig.pageName, 'update')
+const isQuery = usePermission(props.contentConfig.pageName, 'query')
+
 // 1.请求数据
 const systemStore = useSystemStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
 function fetchPageListData(formData: any = {}) {
+  if(!isQuery) return
   // 1.获取offset和size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size

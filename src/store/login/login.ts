@@ -2,14 +2,15 @@ import { defineStore } from "pinia";
 import { accountLogin, getUserInfoById, getUserMenusByRoleId } from '@/service/login/login'
 import type { IAccount } from "@/types";
 import { localCache } from "@/utils/cache";
-import { mapMenuToRoutes } from "@/utils/map-menus";
+import { mapMenuListToPermissions, mapMenuToRoutes } from "@/utils/map-menus";
 import router from "@/router";
 import useMainStore from "../main/main";
 
 interface ILoginState {
     token: string,
     userInfo: any,
-    userMenus: any[]
+    userMenus: any[],
+    permissions: string[],
 }
 
 const useLoginStore = defineStore('login', {
@@ -17,7 +18,8 @@ const useLoginStore = defineStore('login', {
         // token: localStorage.getItem('token') ?? '',
         token: '',
         userInfo: {},
-        userMenus: []
+        userMenus: [],
+        permissions: []
     }),
 
     actions: {
@@ -48,6 +50,10 @@ const useLoginStore = defineStore('login', {
             const mainStore = useMainStore()
             mainStore.fetchEntireDataAction()
 
+            // 7.获取登录用户的所有按钮权限
+            const permissions = mapMenuListToPermissions(this.userMenus)
+            this.permissions = permissions
+
             //  页面跳转
             router.push('/main')
         },
@@ -67,6 +73,10 @@ const useLoginStore = defineStore('login', {
                 // 请求所有roles/department数据(刷新时数据不会消失，经常变化，不放缓存，刷新时请求最新的)
                 const mainStore = useMainStore()
                 mainStore.fetchEntireDataAction()
+
+                // 刷新时缓存按钮权限
+                const permissions = mapMenuListToPermissions(userMenus)
+                this.permissions = permissions
 
                 // 2.根据菜单menu动态加载路由(使用工具类map-menus.ts)
                 const routes = mapMenuToRoutes(userMenus)

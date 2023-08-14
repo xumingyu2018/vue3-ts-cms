@@ -93,3 +93,25 @@ export function mapMenuListToIds(menuList: any[]) {
   recurseGetId(menuList)
   return ids
 }
+
+/**
+ * 菜单映射到按钮的权限permissions
+ * @param menuList 菜单列表
+ * @returns 权限的数组
+ */
+export function mapMenuListToPermissions(menuList :any) {
+  const permissions: string[] = []
+
+  function recurseGetPermission(menus: any[]) {
+    for(const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        recurseGetPermission(menu.children ?? [])
+      } else {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+  recurseGetPermission(menuList)
+
+  return permissions
+}
