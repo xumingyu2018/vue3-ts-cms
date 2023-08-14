@@ -16,7 +16,7 @@
       <el-dropdown>
         <span class="user-info">
           <el-avatar :size="30" class="avatar" src="https://xumingyu2018.github.io/avatar.png" />
-          <span class="name">Nevermore</span>
+          <span class="name">{{ loginStore.userInfo.name }}</span>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -42,6 +42,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { localCache } from '@/utils/cache'
+import useLoginStore from '@/store/login/login' 
 
 const router = useRouter()
 function handleExitClick() {
@@ -50,6 +51,9 @@ function handleExitClick() {
   localCache.deleteCache('userMenus')
   router.push('/login')
 }
+
+// 显示用户名称信息
+const loginStore = useLoginStore()
 </script>
 
 <style lang="less" scoped>
