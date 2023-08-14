@@ -41,7 +41,7 @@ import type { ElTree } from 'element-plus/es/components/index.js';
 // hooks逻辑关系
 const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
 
-const { modalRef, handleEditDataClick, handleNewDataClick } = usePageModal(editCallback)
+const { modalRef, handleEditDataClick, handleNewDataClick } = usePageModal(newCallback, editCallback)
 
 // 获取完整的菜单
 const mainStore = useMainStore()
@@ -54,8 +54,15 @@ function handleELTreeCheck(data1: any, data2: any) {
   otherInfo.value = { menuList }
 } 
 
-// 编辑角色菜单权限回显
 const treeRef = ref<InstanceType<typeof ElTree>>()
+// 新增角色菜单权限重置
+function newCallback(){
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys([])
+  })
+}
+
+// 编辑角色菜单权限回显
 function editCallback(data: any){
   nextTick(() => {
     const menuList = mapMenuListToIds(data.menuList)
