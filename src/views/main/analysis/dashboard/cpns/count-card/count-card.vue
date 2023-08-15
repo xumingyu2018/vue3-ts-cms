@@ -22,6 +22,7 @@ import { CountUp } from 'countup.js';
 import { onMounted, ref } from 'vue';
 
 interface IProps {
+    amount? :string,
     title?: string,
     tips?: string,
     number1?: number,
@@ -38,15 +39,20 @@ const props = withDefaults(defineProps<IProps>(), {
     subtitle: '商品总销量'
 })
 
+const countOption = {
+    prefix: props.amount == 'sale' ? '¥' : ''
+}
+
 // 创建CountUp的实例对象
 const count1Ref = ref<HTMLElement>()
 const count2Ref = ref<HTMLElement>()
 // 参数1: 数字动画的元素
 // 参数2: 数字增加到多少
+// 参数3: 给参数1前面加个前缀，如¥
 // 这里使用onMounted是因为setup的时候还没挂载到ref,就会报错
 onMounted(() => {
-    const countup1 = new CountUp(count1Ref.value!, props.number1, {})
-    const countup2 = new CountUp(count2Ref.value!, props.number2, {})
+    const countup1 = new CountUp(count1Ref.value!, props.number1, countOption)
+    const countup2 = new CountUp(count2Ref.value!, props.number2, countOption)
 
     countup1.start()
     countup2.start()
