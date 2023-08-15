@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<IProps>(), {
 })
 
 const countOption = {
-    prefix: props.amount == 'sale' ? '¥' : ''
+    prefix: props.amount == 'saleroom' ? '¥' : ''
 }
 
 // 创建CountUp的实例对象
@@ -92,6 +92,7 @@ onMounted(() => {
         height: 38px;
         line-height: 38px;
         letter-spacing: 1px;
+        font-size: 14px;
         color: rgba(0, 0, 0, 0.85);
         border-top: 1px solid #f0f0f0;
     }
