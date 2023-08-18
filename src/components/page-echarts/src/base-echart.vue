@@ -1,0 +1,36 @@
+<template>
+  <div class="base-echart">
+    <div class="echart" ref="echartRef"></div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import * as echarts from 'echarts'
+import { onMounted, ref } from 'vue'
+// 获取echart的option类型
+import type { EChartsOption } from 'echarts'
+
+// 接收每个echart不同配置
+interface IProps {
+    option: EChartsOption
+}
+const props = defineProps<IProps>()
+
+// 1. 引用dom实例
+const echartRef = ref<HTMLElement>()
+onMounted(() => {
+  // 2. 基于准备好的dom，初始化echart实例
+  const echartInstance = echarts.init(echartRef.value!, "light", {
+    renderer: 'canvas'
+  })
+
+  // 3.设置options(配置),动态传入每个图的option
+  echartInstance.setOption(props.option)
+})
+</script>
+
+<style lang="less" scoped>
+.echart {
+  height: 250px;
+}
+</style>
