@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 // 获取echart的option类型
 import type { EChartsOption } from 'echarts'
 
@@ -24,8 +24,9 @@ onMounted(() => {
     renderer: 'canvas'
   })
 
-  // 3.设置options(配置),动态传入每个图的option
-  echartInstance.setOption(props.option)
+  // 3.第一次options(配置),动态传入每个图的option
+  // watchEffect监听option变化，重新执行
+  watchEffect(() => echartInstance.setOption(props.option)) 
 })
 </script>
 
