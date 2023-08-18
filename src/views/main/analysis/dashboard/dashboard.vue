@@ -12,7 +12,7 @@
     <el-row :gutter="10">
       <el-col :span="7">
         <chart-card>
-          <pie-echart/>
+          <pie-echart :pie-data="showGoodsCategoryCount"/>
         </chart-card>
       </el-col>
 
@@ -43,9 +43,10 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { computed } from "vue";
 import countCard from "./cpns/count-card/count-card.vue";
 import chartCard from "./cpns/chart-card/chart-card.vue";
-import { storeToRefs } from 'pinia'
 import useAnalysisStore from '@/store/main/analysis/analysis'
 
 // 发起actions封装的网络请求
@@ -53,7 +54,16 @@ const analysisStore = useAnalysisStore()
 analysisStore.fetchAnalysisDataAction()
 
 // 获取数据
-const { amountList } = storeToRefs(analysisStore)
+const { amountList, goodsCategoryCount } = storeToRefs(analysisStore)
+
+// 获取echart饼图数据
+const showGoodsCategoryCount = computed(() => {
+  return goodsCategoryCount.value.map((item) => ({
+    name: item.name,
+    value: item.goodsCount
+  }))
+})
+
 </script>
 
 <style lang="less" scoped>
