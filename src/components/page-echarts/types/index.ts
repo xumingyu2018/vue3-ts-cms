@@ -1,4 +1,4 @@
 export interface IEchartValueType {
-    value: number
-    name: string
-  }
+  value: number
+  name: string
+}

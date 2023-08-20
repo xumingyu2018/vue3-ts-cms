@@ -17,15 +17,13 @@
       </el-col>
 
       <el-col :span="10">
-        <chart-card>
-          <line-echart/>  
-        </chart-card>
+        <chart-card></chart-card>
 
       </el-col>
 
       <el-col :span="7">
         <chart-card>
-          <rose-echart :rose-data="showGoodsCategorySale"/>
+          <rose-echart :rose-data="showGoodsCategoryCount"/>
         </chart-card>
       </el-col>
     </el-row>
@@ -64,13 +62,6 @@ const showGoodsCategoryCount = computed(() => {
   }))
 })
 
-// 获取echart饼玫瑰图数据
-const showGoodsCategorySale = computed(() => {
-  return goodsCategorySale.value.map((item) => ({
-    name: item.name,
-    value: item.goodsSale
-  }))
-})
 
 </script>
 
