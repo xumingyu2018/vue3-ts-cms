@@ -26,7 +26,12 @@ onMounted(() => {
 
   // 3.第一次options(配置),动态传入每个图的option
   // watchEffect监听option变化，重新执行
-  watchEffect(() => echartInstance.setOption(props.option)) 
+  watchEffect(() => echartInstance.setOption(props.option))
+
+  // 4.监听window缩放实现echart响应式布局
+  window.addEventListener('resize', () => {
+    echartInstance.resize()
+  })
 })
 </script>
 
