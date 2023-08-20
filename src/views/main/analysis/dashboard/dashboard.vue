@@ -25,8 +25,8 @@
 
       <el-col :span="7">
         <chart-card>
+          <rose-echart :rose-data="showGoodsCategorySale"/>
         </chart-card>
-
       </el-col>
     </el-row>
 
@@ -54,13 +54,21 @@ const analysisStore = useAnalysisStore()
 analysisStore.fetchAnalysisDataAction()
 
 // 获取数据
-const { amountList, goodsCategoryCount } = storeToRefs(analysisStore)
+const { amountList, goodsCategoryCount, goodsCategorySale } = storeToRefs(analysisStore)
 
 // 获取echart饼图数据
 const showGoodsCategoryCount = computed(() => {
   return goodsCategoryCount.value.map((item) => ({
     name: item.name,
     value: item.goodsCount
+  }))
+})
+
+// 获取echart饼玫瑰图数据
+const showGoodsCategorySale = computed(() => {
+  return goodsCategorySale.value.map((item) => ({
+    name: item.name,
+    value: item.goodsSale
   }))
 })
 

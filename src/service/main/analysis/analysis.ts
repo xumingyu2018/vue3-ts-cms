@@ -7,9 +7,16 @@ export function getAmountListData() {
     })
 }
 
-// 获取饼图的数据
+// 获取饼图分类商品数量
 export function getGoodsCategoryCount() {
     return hyRequest.get({
         url: '/goods/category/count'
+    })
+}
+
+// 获取玫瑰图商品销量
+export function getGoodsCategorySale() {
+    return hyRequest.get({
+        url: '/goods/category/sale'
     })
 }
