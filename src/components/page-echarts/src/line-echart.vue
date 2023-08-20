@@ -1,32 +1,52 @@
 <template>
   <div class="line-echart">
-    <base-echart :option="option"/>
+    <base-echart :option="option" />
   </div>
 </template>
 
 <script setup lang="ts">
 import BaseEchart from './base-echart.vue'
+import { computed } from 'vue'
 import type { EChartsOption } from 'echarts'
 
-// 只负责传入饼图的option
-const option: EChartsOption = {
-  xAxis: {
-    type: 'category',
-    boundaryGap: false,
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      data: [820, 932, 901, 934, 1290, 1330, 1320],
-      type: 'line',
-      areaStyle: {}
-    }
-  ]
+interface IProps {
+  labels: string[]
+  values: string[]
 }
+
+const props = defineProps<IProps>()
+
+// 玫瑰图
+const option = computed<EChartsOption>(() => {
+  return {
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: props.labels
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: '分类销量统计',
+        type: 'line',
+        stack: '总量',
+        areaStyle: {},
+        emphasis: {
+          focus: 'series'
+        },
+        data: props.values
+      }
+    ]
+  }
+})
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

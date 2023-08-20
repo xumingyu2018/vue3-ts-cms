@@ -18,7 +18,6 @@
 
       <el-col :span="10">
         <chart-card></chart-card>
-
       </el-col>
 
       <el-col :span="7">
@@ -30,7 +29,9 @@
 
     <el-row :gutter="10">
       <el-col :span="12">
-        <chart-card>折线图</chart-card>
+        <chart-card>
+          <line-echart :labels="showGoodsCategorySale.labels" :values="showGoodsCategorySale.values"/>
+        </chart-card>
       </el-col>
 
       <el-col :span="12">
@@ -62,6 +63,12 @@ const showGoodsCategoryCount = computed(() => {
   }))
 })
 
+// 获取echart折线图数据
+const showGoodsCategorySale = computed(() => {
+  const labels = goodsCategorySale.value.map((item) => item.name)
+  const values = goodsCategorySale.value.map((item) => item.goodsSale)
+  return { labels, values }
+})
 
 </script>
 

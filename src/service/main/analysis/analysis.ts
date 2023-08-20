@@ -15,8 +15,8 @@ export function getGoodsCategoryCount() {
 }
 
 // 获取折线图商品销量
-// export function getGoodsCategorySale() {
-//     return hyRequest.get({
-//         url: '/goods/category/sale'
-//     })
-// } 
+export function getGoodsCategorySale() {
+    return hyRequest.get({
+        url: '/goods/category/sale'
+    })
+} 

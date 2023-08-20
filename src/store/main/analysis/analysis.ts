@@ -4,13 +4,13 @@ import { defineStore } from "pinia";
 interface IAnalysisState {
     amountList: any[],
     goodsCategoryCount: any[],
-    // goodsCategorySale: any[]
+    goodsCategorySale: any[]
 }
 const useAnalysisStore = defineStore('analysis', {
     state: (): IAnalysisState => ({
         amountList: [],
         goodsCategoryCount: [],
-        // goodsCategorySale: []
+        goodsCategorySale: []
     }),
     actions: {
         async fetchAnalysisDataAction() { 
@@ -23,8 +23,8 @@ const useAnalysisStore = defineStore('analysis', {
             this.goodsCategoryCount = goodsCountResult.data
 
             // 获取折线图数据
-            // const goodsSaleResult = await getGoodsCategorySale()
-            // this.goodsCategorySale = goodsSaleResult.data
+            const goodsSaleResult = await getGoodsCategorySale()
+            this.goodsCategorySale = goodsSaleResult.data
         },
     }
 })
