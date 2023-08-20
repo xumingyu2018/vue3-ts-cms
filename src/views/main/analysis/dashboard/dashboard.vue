@@ -3,7 +3,7 @@
     <!--顶部卡片组件 -->
     <el-row :gutter="10">
       <template v-for="item in amountList" :key="item.amount">
-        <el-col :span="6">
+        <el-col :span="6" :xs="24" :sm="12" :md="8" :lg="6">
           <count-card v-bind="item"/>
         </el-col>
       </template>
