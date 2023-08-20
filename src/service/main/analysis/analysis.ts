@@ -20,3 +20,10 @@ export function getGoodsCategorySale() {
         url: '/goods/category/sale'
     })
 } 
+
+// 获取柱状图商品收藏数量
+export function getGoodsCategoryFavor() {
+    return hyRequest.get({
+        url: '/goods/category/favor'
+    })
+} 

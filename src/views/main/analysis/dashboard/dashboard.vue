@@ -35,7 +35,9 @@
       </el-col>
 
       <el-col :span="12">
-        <chart-card>柱状图</chart-card>
+        <chart-card>
+          <bar-echart v-bind="showGoodsCategoryFavor"/>
+        </chart-card>
       </el-col>
     </el-row>
   </div>
@@ -53,7 +55,7 @@ const analysisStore = useAnalysisStore()
 analysisStore.fetchAnalysisDataAction()
 
 // 获取数据
-const { amountList, goodsCategoryCount, goodsCategorySale } = storeToRefs(analysisStore)
+const { amountList, goodsCategoryCount, goodsCategorySale, goodsCategoryFavor } = storeToRefs(analysisStore)
 
 // 获取echart饼图数据
 const showGoodsCategoryCount = computed(() => {
@@ -67,6 +69,13 @@ const showGoodsCategoryCount = computed(() => {
 const showGoodsCategorySale = computed(() => {
   const labels = goodsCategorySale.value.map((item) => item.name)
   const values = goodsCategorySale.value.map((item) => item.goodsSale)
+  return { labels, values }
+})
+
+// 获取echart柱状图数据
+const showGoodsCategoryFavor = computed(() => {
+  const labels = goodsCategoryFavor.value.map((item) => item.name)
+  const values = goodsCategoryFavor.value.map((item) => item.goodsFavor)
   return { labels, values }
 })
 
