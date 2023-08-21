@@ -17,7 +17,9 @@
       </el-col>
 
       <el-col :span="10">
-        <chart-card></chart-card>
+        <chart-card>
+          <map-echart :map-data="showGoodsAddressSale"/> 
+        </chart-card>
       </el-col>
 
       <el-col :span="7">
@@ -55,7 +57,7 @@ const analysisStore = useAnalysisStore()
 analysisStore.fetchAnalysisDataAction()
 
 // 获取数据
-const { amountList, goodsCategoryCount, goodsCategorySale, goodsCategoryFavor } = storeToRefs(analysisStore)
+const { amountList, goodsCategoryCount, goodsCategorySale, goodsCategoryFavor, goodsAddressSale } = storeToRefs(analysisStore)
 
 // 获取echart饼图数据
 const showGoodsCategoryCount = computed(() => {
@@ -77,6 +79,14 @@ const showGoodsCategoryFavor = computed(() => {
   const labels = goodsCategoryFavor.value.map((item) => item.name)
   const values = goodsCategoryFavor.value.map((item) => item.goodsFavor)
   return { labels, values }
+})
+
+// 获取echart地图数据
+const showGoodsAddressSale = computed(() => {
+  return goodsAddressSale.value.map((item) => ({
+    name: item.address, 
+    value: item.count
+  }))
 })
 
 </script>

@@ -27,3 +27,10 @@ export function getGoodsCategoryFavor() {
         url: '/goods/category/favor'
     })
 } 
+
+// 获取地图数据
+export function getGoodsAddressSale() {
+    return hyRequest.get({
+        url: '/goods/address/sale'
+    })
+}

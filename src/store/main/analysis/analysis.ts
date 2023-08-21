@@ -1,18 +1,20 @@
-import { getAmountListData, getGoodsCategoryCount, getGoodsCategoryFavor, getGoodsCategorySale } from "@/service/main/analysis/analysis";
+import { getAmountListData, getGoodsAddressSale, getGoodsCategoryCount, getGoodsCategoryFavor, getGoodsCategorySale } from "@/service/main/analysis/analysis";
 import { defineStore } from "pinia";
 
 interface IAnalysisState {
     amountList: any[],
     goodsCategoryCount: any[],
     goodsCategorySale: any[],
-    goodsCategoryFavor: any[]
+    goodsCategoryFavor: any[],
+    goodsAddressSale: any[]
 }
 const useAnalysisStore = defineStore('analysis', {
     state: (): IAnalysisState => ({
         amountList: [],
         goodsCategoryCount: [],
         goodsCategorySale: [],
-        goodsCategoryFavor: []
+        goodsCategoryFavor: [],
+        goodsAddressSale: []
     }),
     actions: {
         async fetchAnalysisDataAction() { 
@@ -31,6 +33,11 @@ const useAnalysisStore = defineStore('analysis', {
             // 获取柱状图数据
             const goodsFavorResult = await getGoodsCategoryFavor()
             this.goodsCategoryFavor = goodsFavorResult.data
+
+            // 获取地图数据
+            const goodsAddressSaleResult = await getGoodsAddressSale()
+            this.goodsAddressSale = goodsAddressSaleResult.data
+            console.log(this.goodsAddressSale);
         },
     }
 })
