@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script setup lang="ts" name="department">
+<script setup lang="ts" name="category">
 import pageSearch from '@/components/page-search/page-search.vue'
 import PageContent from '@/components/page-content/page-content.vue'
 import PageModal from '@/components/page-modal/page-modal.vue'
@@ -45,6 +45,4 @@ const { modalRef, handleEditDataClick, handleNewDataClick } = usePageModal()
 </script>
 
 <style scoped>
-.department {
-}
 </style>
