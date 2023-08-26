@@ -31,14 +31,14 @@
           </template>
 
           <!-- 自定义插槽定制处理(通用) -->
-          <!-- <template v-else-if="item.type === 'custom'">
+          <template v-else-if="item.type === 'custom'">
             <el-table-column align="center" v-bind="item">
               <template #default="scope">
-                给用户预留定制插槽
+                <!-- 给用户预留定制插槽 -->
                 <slot :name="item.slotName" v-bind="scope" :prop="item.prop"></slot>
               </template>
             </el-table-column>
-          </template> -->
+          </template>
 
           <!-- 处理普通类型 -->
           <template v-else>
